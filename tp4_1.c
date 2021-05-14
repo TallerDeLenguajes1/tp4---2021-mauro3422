@@ -13,9 +13,11 @@ void cargarTarea(tarea **arreglo,int cant);
 //Muestro una tarea a la vez.
 void mostrarTarea(tarea **arreglo);
 void controlTarea(tarea **tareasPen,tarea **tareaReal,int cant);
+tarea *buscaTarea(tarea **tarea,int cant,int id);
+void freeMem(tarea **tarea,int cant);
 int main(){
 
-    int cantTareas;
+    int cantTareas,id;
     printf("Cantidad de tareas:");
     scanf("%d",&cantTareas);
     fflush(stdin);
@@ -47,8 +49,19 @@ int main(){
             }
         }
         
-    
+        //Buscar tarea
 
+        printf("Ingrese el ID de la tarea a buscar:");
+        scanf("%d",&id);
+        fflush(stdin);
+        tarea * tareaEnc=buscaTarea(tareasRealizadas,cantTareas,id);
+        mostrarTarea(&tareaEnc);
+
+        freeMem(tareasPendientes,cantTareas);
+        freeMem(tareasRealizadas,cantTareas);
+        free(tareasPendientes);
+        free(tareasRealizadas);
+        
     getchar();
     return 0;
 }
@@ -99,4 +112,23 @@ void controlTarea(tarea **tareasPen,tarea **tareaReal,int cant){
         }
     }
     
+}
+tarea * buscaTarea(tarea **tarea,int cant,int id){
+    for(int i=0;i <cant; i++){
+        if ((*(tarea+i))->TareaID=id && (*(tarea+i))!=NULL)
+        {
+            return (*(tarea+i));
+        }
+        
+    }
+}
+void freeMem(tarea **tarea,int cant){
+    for (int i = 0; i < cant; i++)
+    {
+        if ((*(tarea+i))!=NULL)
+        {
+        free((*(tarea+i))->Descripcion);
+        free((*(tarea+i)));
+        }   
+    }
 }
