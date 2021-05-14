@@ -13,6 +13,7 @@ void cargarTarea(tarea **arreglo,int cant);
 //Muestro una tarea a la vez.
 void mostrarTarea(tarea **arreglo);
 void controlTarea(tarea **tareasPen,tarea **tareaReal,int cant);
+void freeMem(tarea **tarea,int cant);
 int main(){
 
     int cantTareas;
@@ -46,9 +47,12 @@ int main(){
                 mostrarTarea((tareasPendientes+i));
             }
         }
+              
+        freeMem(tareasPendientes,cantTareas);
+        freeMem(tareasRealizadas,cantTareas);
+        free(tareasPendientes);
+        free(tareasRealizadas);
         
-    
-
     getchar();
     return 0;
 }
@@ -99,4 +103,14 @@ void controlTarea(tarea **tareasPen,tarea **tareaReal,int cant){
         }
     }
     
+}
+void freeMem(tarea **tarea,int cant){
+    for (int i = 0; i < cant; i++)
+    {
+        if ((*(tarea+i))!=NULL)
+        {
+        free((*(tarea+i))->Descripcion);
+        free((*(tarea+i)));
+        }   
+    }
 }
