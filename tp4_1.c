@@ -12,9 +12,14 @@ typedef struct Starea {
 void cargarTarea(tarea **arreglo,int cant);
 //Muestro una tarea a la vez.
 void mostrarTarea(tarea **arreglo);
+//Control de tareas realizadas
 void controlTarea(tarea **tareasPen,tarea **tareaReal,int cant);
-tarea *buscaTarea(tarea **tarea,int cant,int id);
+//Busca tarea por id ingresado.
+tarea *buscaTarea(tarea **tarea,int cant);
+//Libero memoria.
 void freeMem(tarea **tarea,int cant);
+
+
 int main(){
 
     int cantTareas,id;
@@ -51,10 +56,8 @@ int main(){
         
         //Buscar tarea
 
-        printf("Ingrese el ID de la tarea a buscar:");
-        scanf("%d",&id);
-        fflush(stdin);
-        tarea * tareaEnc=buscaTarea(tareasRealizadas,cantTareas,id);
+        printf("---------Busqueda de tarea por ID----------\n");
+        tarea * tareaEnc=buscaTarea(tareasRealizadas,cantTareas);
         mostrarTarea(&tareaEnc);
 
         freeMem(tareasPendientes,cantTareas);
@@ -113,7 +116,11 @@ void controlTarea(tarea **tareasPen,tarea **tareaReal,int cant){
     }
     
 }
-tarea * buscaTarea(tarea **tarea,int cant,int id){
+tarea * buscaTarea(tarea **tarea,int cant){
+    int id;
+    printf("Ingrese el ID de la tarea a buscar:");
+    scanf("%d",&id);
+    fflush(stdin);
     for(int i=0;i <cant; i++){
         if ((*(tarea+i))->TareaID=id && (*(tarea+i))!=NULL)
         {
