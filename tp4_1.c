@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 typedef struct Starea {
@@ -14,7 +15,7 @@ void cargarTarea(tarea **arreglo,int cant);
 void mostrarTarea(tarea **arreglo);
 void controlTarea(tarea **tareasPen,tarea **tareaReal,int cant);
 void freeMem(tarea **tarea,int cant);
-void buscaTarea();
+tarea * buscaTarea(tarea **tarea,int cant);
 int main(){
 
     int cantTareas;
@@ -49,6 +50,9 @@ int main(){
             }
         }
         
+        printf("------------Busqueda de tarea por palabra clave----------\n");
+        tarea *tareaEnc=buscaTarea(tareasRealizadas,cantTareas);
+        mostrarTarea(&tareaEnc);
 
         freeMem(tareasPendientes,cantTareas);
         freeMem(tareasRealizadas,cantTareas);
@@ -67,6 +71,7 @@ void cargarTarea(tarea **arreglo,int cant){
         (item)->Descripcion=(char *)malloc(sizeof(char)*180);
         printf("Ingresar Descripcion:");
         gets((item)->Descripcion);
+        fflush(stdin);
         (item)->Duracion=rand()%(100-10+1)+10;
         *(arreglo+i)=item;
     }
@@ -105,6 +110,19 @@ void controlTarea(tarea **tareasPen,tarea **tareaReal,int cant){
         }
     }
     
+}
+tarea * buscaTarea(tarea **tarea,int cant){
+    char arrCad[20];
+    printf("Ingresa la palabra a buscar:");
+    gets(arrCad);
+    fflush(stdin);
+    for (int i = 0; i < cant; i++)
+    {
+        if (strstr(((*(tarea+i))->Descripcion),arrCad)!=NULL)
+        {
+            return (*(tarea+i));
+        }   
+    }
 }
 void freeMem(tarea **tarea,int cant){
     for (int i = 0; i < cant; i++)
