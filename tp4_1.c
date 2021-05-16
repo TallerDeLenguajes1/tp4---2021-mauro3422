@@ -123,6 +123,7 @@ tarea * buscaTarea(tarea **tarea,int cant){
             return (*(tarea+i));
         }   
     }
+    print("No se encontro la palabra en ninguna de las tareas.\n");
 }
 void freeMem(tarea **tarea,int cant){
     for (int i = 0; i < cant; i++)
