@@ -13,12 +13,19 @@ typedef struct Starea {
 void cargarTarea(tarea **arreglo,int cant);
 //Muestro una tarea a la vez.
 void mostrarTarea(tarea **arreglo);
+//Control de tareas realizadas
 void controlTarea(tarea **tareasPen,tarea **tareaReal,int cant);
+//Busqueda por palabra clave
+tarea * BusquedaPorPalabra(tarea **tarea,int cant);
+//Busca tarea por id ingresado.
+tarea *BusquedaPorId(tarea **tarea,int cant);
+//Libero memoria.
 void freeMem(tarea **tarea,int cant);
-tarea * buscaTarea(tarea **tarea,int cant);
+
+
 int main(){
 
-    int cantTareas;
+    int cantTareas,id;
     printf("Cantidad de tareas:");
     scanf("%d",&cantTareas);
     fflush(stdin);
@@ -51,8 +58,12 @@ int main(){
         }
         
         printf("------------Busqueda de tarea por palabra clave----------\n");
-        tarea *tareaEnc=buscaTarea(tareasRealizadas,cantTareas);
-        mostrarTarea(&tareaEnc);
+        tarea *tareaEncPal=BusquedaPorPalabra(tareasRealizadas,cantTareas);
+        mostrarTarea(&tareaEncPal);
+
+        printf("---------Busqueda de tarea por ID----------\n");
+        tarea *tareaEncID=BusquedaPorId(tareasRealizadas,cantTareas);
+        mostrarTarea(&tareaEncID);
 
         freeMem(tareasPendientes,cantTareas);
         freeMem(tareasRealizadas,cantTareas);
@@ -111,7 +122,7 @@ void controlTarea(tarea **tareasPen,tarea **tareaReal,int cant){
     }
     
 }
-tarea * buscaTarea(tarea **tarea,int cant){
+tarea * BusquedaPorPalabra(tarea **tarea,int cant){
     char arrCad[20];
     printf("Ingresa la palabra a buscar:");
     gets(arrCad);
@@ -123,8 +134,23 @@ tarea * buscaTarea(tarea **tarea,int cant){
             return (*(tarea+i));
         }   
     }
-    print("No se encontro la palabra en ninguna de las tareas.\n");
+    printf("No se encontro la palabra en ninguna de las tareas.\n");
 }
+
+tarea *BusquedaPorId(tarea **tarea,int cant){
+    int id;
+    printf("Ingrese el ID de la tarea a buscar:");
+    scanf("%d",&id);
+    fflush(stdin);
+    for(int i=0;i <cant; i++){
+        if ((*(tarea+i))->TareaID=id && (*(tarea+i))!=NULL)
+        {
+            return (*(tarea+i));
+        }
+        
+    }
+}
+
 void freeMem(tarea **tarea,int cant){
     for (int i = 0; i < cant; i++)
     {
