@@ -14,6 +14,7 @@ void cargarTarea(tarea **arreglo,int cant);
 void mostrarTarea(tarea **arreglo);
 void controlTarea(tarea **tareasPen,tarea **tareaReal,int cant);
 void freeMem(tarea **tarea,int cant);
+void buscaTarea();
 int main(){
 
     int cantTareas;
@@ -47,7 +48,8 @@ int main(){
                 mostrarTarea((tareasPendientes+i));
             }
         }
-              
+        
+
         freeMem(tareasPendientes,cantTareas);
         freeMem(tareasRealizadas,cantTareas);
         free(tareasPendientes);
